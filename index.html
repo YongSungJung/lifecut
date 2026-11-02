@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko" id="pageRoot">
+  <head id="pageHead">
+    <meta charset="utf-8" id="pageCharset">
+    <meta name="viewport" content="width=device-width, initial-scale=1" id="pageViewport">
+    <meta name="theme-color" content="#17131d" id="pageThemeColor">
+    <title id="pageTitle">인생네컷 - 나만의 프레임</title>
+    <link rel="stylesheet" href="style.css" id="siteStyles">
+  </head>
+  <body id="pageBody">
+    <header class="site-header" id="siteHeader">
+      <div class="brand-mark" id="brandMark" aria-hidden="true">L</div>
+      <div class="brand-copy" id="brandCopy">
+        <p class="brand-kicker" id="brandKicker">YOUR MOMENT, IN ONE FRAME</p>
+        <h1 id="pageHeading">인생네컷</h1>
+      </div>
+    </header>
+
+    <main class="studio" id="mainContent">
+      <section class="intro" id="introSection" aria-labelledby="introHeading">
+        <p class="step-label" id="stepLabel">EXTENSION A · CUT SELECT</p>
+        <h2 id="introHeading">오늘의 나를 담아봐요</h2>
+        <p class="intro-copy" id="introCopy">2컷 또는 4컷을 고르면<br id="introLineBreak">차례대로 촬영해 세로 사진으로 만들어요.</p>
+      </section>
+
+      <section class="cut-select-screen" id="cutSelectScreen" aria-labelledby="cutSelectHeading">
+        <div class="section-heading" id="cutSelectHeadingGroup">
+          <p class="step-label" id="cutSelectStepLabel">01 · FRAME</p>
+          <h2 id="cutSelectHeading">컷 수를 골라주세요</h2>
+          <p class="section-copy" id="cutSelectCopy">원하는 세로 프레임을 선택해요.</p>
+        </div>
+        <div class="cut-options" id="cutOptions">
+          <button class="cut-option" id="twoCutButton" type="button" aria-label="2컷 프레임 선택">
+            <span class="mini-frame mini-frame-two" id="twoCutMiniFrame" aria-hidden="true">
+              <span class="mini-photo" id="twoCutPhotoOne"></span>
+              <span class="mini-photo" id="twoCutPhotoTwo"></span>
+              <span class="mini-caption" id="twoCutCaption"></span>
+            </span>
+            <span class="cut-option-title" id="twoCutTitle">2컷</span>
+            <span class="cut-option-note" id="twoCutNote">가볍게 두 장</span>
+          </button>
+          <button class="cut-option" id="fourCutButton" type="button" aria-label="4컷 프레임 선택">
+            <span class="mini-frame mini-frame-four" id="fourCutMiniFrame" aria-hidden="true">
+              <span class="mini-photo" id="fourCutPhotoOne"></span>
+              <span class="mini-photo" id="fourCutPhotoTwo"></span>
+              <span class="mini-photo" id="fourCutPhotoThree"></span>
+              <span class="mini-photo" id="fourCutPhotoFour"></span>
+              <span class="mini-caption" id="fourCutCaption"></span>
+            </span>
+            <span class="cut-option-title" id="fourCutTitle">4컷</span>
+            <span class="cut-option-note" id="fourCutNote">우리의 네 순간</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="capture-screen hidden" id="captureScreen" aria-labelledby="captureHeading">
+        <div class="section-heading" id="captureHeadingGroup">
+          <p class="step-label" id="captureStepLabel">02 · CAMERA</p>
+          <h2 id="captureHeading">촬영할게요</h2>
+          <p class="section-copy" id="captureHelp">시작 버튼을 한 번 누르면 자동으로 촬영해요.</p>
+        </div>
+        <div class="camera-card" id="cameraCard">
+          <div class="preview-frame" id="previewFrame">
+            <div class="camera-placeholder" id="cameraPlaceholder">
+              <span class="placeholder-icon" id="placeholderIcon" aria-hidden="true">✦</span>
+              <p id="placeholderText">카메라가 여기에 보여요</p>
+            </div>
+            <video class="camera-preview hidden" id="cameraPreview" autoplay muted playsinline aria-label="카메라 미리 보기"></video>
+            <div class="countdown hidden" id="countdown" aria-live="assertive" aria-atomic="true"></div>
+            <div class="camera-flash" id="cameraFlash" aria-hidden="true"></div>
+          </div>
+          <div class="capture-progress" id="captureProgress">
+            <span class="progress-label" id="progressLabel">촬영 진행</span>
+            <span class="progress-count" id="progressCount" aria-live="polite">0 / 0</span>
+          </div>
+          <p class="status-message" id="statusMessage" role="status" aria-live="polite">선택한 프레임을 촬영할 준비가 됐어요.</p>
+          <button class="capture-button" id="captureButton" type="button" aria-controls="cameraPreview shotPreviews">
+            <span class="button-icon" id="buttonIcon" aria-hidden="true">●</span>
+            <span id="buttonLabel">촬영 시작</span>
+          </button>
+          <button class="text-button" id="backToSelectButton" type="button">컷 수 다시 고르기</button>
+        </div>
+        <div class="shot-preview-section" id="shotPreviewSection">
+          <h3 id="shotPreviewHeading">찍은 사진</h3>
+          <div class="shot-previews" id="shotPreviews" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="result-screen hidden" id="resultScreen" aria-labelledby="resultHeading">
+        <div class="section-heading" id="resultHeadingGroup">
+          <p class="step-label" id="resultStepLabel">03 · YOUR STRIP</p>
+          <h2 id="resultHeading">오늘의 네 순간</h2>
+          <p class="section-copy" id="resultCopy">마음에 드는 세로 프레임이 완성됐어요.</p>
+        </div>
+        <p class="filter-instruction" id="filterInstruction">필터를 골라 보세요</p>
+        <div class="filter-list" id="filters" role="group" aria-label="사진 필터"></div>
+        <div class="final-frame-wrap" id="finalFrameWrap">
+          <canvas class="final-frame" id="finalFrame" aria-label="인생네컷 세로 프레임 결과"></canvas>
+        </div>
+        <button class="capture-button start-over-button" id="startOverButton" type="button">
+          <span id="startOverLabel">처음으로</span>
+        </button>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="siteFooter">
+      <p id="cameraNotice">카메라를 사용하려면 HTTPS 주소 또는 내 PC에서 연 파일에서 접속해 주세요.</p>
+    </footer>
+
+    <script src="js/camera.js" id="cameraScript"></script>
+    <script src="js/frame.js" id="frameScript"></script>
+    <script src="js/filters.js" id="filtersScript"></script>
+    <script src="js/app.js" id="appScript"></script>
+  </body>
+</html>
