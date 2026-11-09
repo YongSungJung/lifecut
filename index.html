@@ -97,6 +97,14 @@
         <div class="final-frame-wrap" id="finalFrameWrap">
           <canvas class="final-frame" id="finalFrame" aria-label="인생네컷 세로 프레임 결과"></canvas>
         </div>
+        <button class="capture-button qr-button" id="qr-btn" type="button">QR코드로 휴대폰에 받기</button>
+        <p class="qr-message" id="qr-message" role="status" aria-live="polite">완성 사진을 QR 코드로 휴대폰에 보낼 수 있어요.</p>
+        <div class="qr-box hidden" id="qr-box">
+          <p class="qr-instruction" id="qrInstruction">휴대폰 카메라로 QR코드를 비춰 보세요</p>
+          <div class="qrcode" id="qrcode" aria-label="완성 사진을 여는 QR 코드"></div>
+          <p class="qr-save-instruction" id="qrSaveInstruction">열린 사진을 길게 눌러 저장하세요</p>
+          <a class="photo-link" id="photo-link" target="_blank" rel="noopener noreferrer">완성 사진 열기</a>
+        </div>
         <button class="capture-button start-over-button" id="startOverButton" type="button">
           <span id="startOverLabel">처음으로</span>
         </button>
@@ -107,9 +115,13 @@
       <p id="cameraNotice">카메라를 사용하려면 HTTPS 주소 또는 내 PC에서 연 파일에서 접속해 주세요.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" id="supabaseCdnScript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" id="qrcodeCdnScript"></script>
+    <script src="js/config.js" id="configScript"></script>
     <script src="js/camera.js" id="cameraScript"></script>
     <script src="js/frame.js" id="frameScript"></script>
     <script src="js/filters.js" id="filtersScript"></script>
+    <script src="js/upload.js" id="uploadScript"></script>
     <script src="js/app.js" id="appScript"></script>
   </body>
 </html>

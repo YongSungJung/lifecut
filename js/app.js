@@ -18,13 +18,21 @@ const resultHeading = document.getElementById("resultHeading");
 const resultCopy = document.getElementById("resultCopy");
 const filterContainer = document.getElementById("filters");
 const cameraFlash = document.getElementById("cameraFlash");
+const qrButton = document.getElementById("qr-btn");
+const qrMessage = document.getElementById("qr-message");
+const qrBox = document.getElementById("qr-box");
+const qrCodeElement = document.getElementById("qrcode");
+const photoLink = document.getElementById("photo-link");
 
 let cameraStream = null;
 let selectedCutCount = 0;
 let isCapturing = false;
+let isQrUploading = false;
+let qrShareRequestId = 0;
 const state = {
   shots: [],
   filter: "original",
+  strip: null,
   renderId: 0
 };
 
@@ -47,6 +55,8 @@ function chooseCutCount(cutCount) {
   selectedCutCount = cutCount;
   state.shots = [];
   state.filter = "original";
+  state.strip = null;
+  resetQrShare();
   renderFilterButtons();
   shotPreviews.replaceChildren();
   progressCount.textContent = `0 / ${selectedCutCount}`;
@@ -156,6 +166,8 @@ async function renderResult() {
   }
 
   context.drawImage(strip, 0, 0);
+  state.strip = strip;
+  resetQrShare();
   return true;
 }
 
@@ -190,6 +202,10 @@ async function selectFilter(filterName) {
   }
 
   const previousFilter = state.filter;
+  const previousStrip = state.strip;
+  resetQrShare();
+  state.strip = null;
+  qrButton.disabled = true;
   state.filter = filterName;
   const renderId = state.renderId + 1;
   renderFilterButtons();
@@ -206,6 +222,8 @@ async function selectFilter(filterName) {
       return;
     }
     state.filter = previousFilter;
+    state.strip = previousStrip;
+    qrButton.disabled = isQrUploading;
     renderFilterButtons();
     const errorMessage = error instanceof Error
       ? error.message
@@ -353,6 +371,8 @@ function returnToCutSelection() {
   selectedCutCount = 0;
   state.shots = [];
   state.filter = "original";
+  state.strip = null;
+  resetQrShare();
   renderFilterButtons();
   shotPreviews.replaceChildren();
   progressCount.textContent = "0 / 0";
@@ -364,10 +384,60 @@ function returnToCutSelection() {
   showScreen(cutSelectScreen);
 }
 
+// 새 결과를 그리거나 필터가 바뀌면 이전 QR과 사진 링크를 감춥니다.
+function resetQrShare() {
+  qrShareRequestId += 1;
+  qrBox.classList.add("hidden");
+  qrCodeElement.replaceChildren();
+  photoLink.removeAttribute("href");
+  qrMessage.textContent = "완성 사진을 QR 코드로 휴대폰에 보낼 수 있어요.";
+  if (!isQrUploading) {
+    qrButton.disabled = !state.strip;
+  }
+}
+
+// 완성 사진을 올리고 QR 코드와 휴대폰에서 여는 링크를 표시합니다.
+async function handleQrButtonClick() {
+  if (isQrUploading || !state.strip) {
+    return;
+  }
+
+  const requestId = ++qrShareRequestId;
+  isQrUploading = true;
+  qrButton.disabled = true;
+  qrBox.classList.add("hidden");
+  qrMessage.textContent = "사진을 올리는 중이에요...";
+
+  try {
+    const url = await uploadPhoto(state.strip);
+    if (requestId !== qrShareRequestId) {
+      return;
+    }
+
+    drawQrCode(qrCodeElement, url);
+    photoLink.href = url;
+    qrBox.classList.remove("hidden");
+    qrMessage.textContent = "사진을 올렸어요. QR 코드를 읽어 휴대폰에서 열어 보세요.";
+  } catch (error) {
+    if (requestId !== qrShareRequestId) {
+      return;
+    }
+
+    const errorMessage = error instanceof Error
+      ? error.message
+      : "다시 시도해 주세요.";
+    qrMessage.textContent = `올리지 못했어요: ${errorMessage}`;
+  } finally {
+    isQrUploading = false;
+    qrButton.disabled = !state.strip;
+  }
+}
+
 twoCutButton.addEventListener("click", chooseTwoCuts);
 fourCutButton.addEventListener("click", chooseFourCuts);
 captureButton.addEventListener("click", runCaptureSequence);
 backToSelectButton.addEventListener("click", returnToCutSelection);
 startOverButton.addEventListener("click", returnToCutSelection);
+qrButton.addEventListener("click", handleQrButtonClick);
 window.addEventListener("pagehide", stopCamera);
 renderFilterButtons();

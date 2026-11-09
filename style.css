@@ -585,6 +585,69 @@ body {
   height: auto;
 }
 
+.qr-button {
+  width: min(100%, 360px);
+  margin: 0 auto;
+}
+
+.qr-message {
+  min-height: 20px;
+  margin: 10px auto 14px;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.qr-box {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  width: min(100%, 360px);
+  margin: 0 auto 18px;
+  padding: 18px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(36, 29, 42, 0.88);
+  text-align: center;
+}
+
+.qr-instruction,
+.qr-save-instruction {
+  margin: 0;
+  color: #e8dfea;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.qrcode {
+  display: grid;
+  width: 216px;
+  min-height: 216px;
+  place-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.qrcode img,
+.qrcode canvas {
+  display: block;
+  max-width: 200px;
+  height: auto;
+}
+
+.photo-link {
+  color: var(--color-pink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.photo-link:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
 .start-over-button {
   width: min(100%, 360px);
   margin: 0 auto;
